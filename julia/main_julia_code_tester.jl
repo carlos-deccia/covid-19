@@ -161,7 +161,7 @@ if plot_timelines
             tmp_reco = sum(Data_matrix_reco[indx_tmp_r,:],dims = 1)
             tmp_coun = [tmp_conf'  tmp_deat' tmp_reco']
 
-            plot( 1:timesteps,tmp_coun, title=string("Country: ",countries_unique[idx_c]), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number [-]", labels=Data_entries, legend=:topleft, show=true)
+            plot( 1:timesteps,tmp_coun, title=string("Country: ",countries_unique[idx_c]), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, show=true)
             savefig(string(save_figs_folder_coun, join(split(countries_unique[idx_c])),".pdf"))
 
         end
@@ -179,7 +179,7 @@ if plot_timelines
         tmp_coun = [global_conf' global_deat' global_reco']
         max_value =  maximum(filter(!isnan,tmp_coun))
 
-        plot( 1:timesteps,tmp_coun, title=string("Global situation"), yticks = (0:100000:max_value), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number [-]", labels=Data_entries, legend=:topleft, show=true)
+        plot( 1:timesteps,tmp_coun, title=string("Global situation"), yticks = (0:100000:max_value), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, show=true)
         savefig(string(save_figs_folder,"timeline_global_confirmed_death_recovered.pdf"))
     end
 
