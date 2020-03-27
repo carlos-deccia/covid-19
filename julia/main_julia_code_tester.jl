@@ -163,9 +163,9 @@ if plot_timelines
 
             plot( 1:timesteps,tmp_coun, title=string("Country: ",countries_unique[idx_c]), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, show=true)
             savefig(string(save_figs_folder_coun, join(split(countries_unique[idx_c])),".pdf"))
-
         end
     end
+
     ### PLOT timeline globaly
     flag_timeline_glob = true
 
@@ -180,7 +180,7 @@ if plot_timelines
         max_value =  maximum(filter(!isnan,tmp_coun))
 
         plot( 1:timesteps,tmp_coun, title=string("Global situation"), yticks = (0:100000:max_value), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, show=true)
-        savefig(string(save_figs_folder,"timeline_global_confirmed_death_recovered.pdf"))
+        savefig(string(save_figs_folder,"global_timeline.pdf"))
     end
 
 end

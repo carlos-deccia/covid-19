@@ -12,9 +12,11 @@ module CodeDepositCorona
 
     # #List of functions exported by this module:
     export func_read_in
+    export func_read_in_ita
 
     #List of Julia scripts included in this module:
     include("func_read_in.jl")
+    include("func_read_in_ita.jl")
 
 
     # Modules used by func_read_in
