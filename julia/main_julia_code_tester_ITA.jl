@@ -12,7 +12,7 @@ save_figs_folder_pro = string(save_figs_folder,"ita_timeline_by_province/")
 naz_data, reg_data, pro_data = func_read_in_ita()
 
 ### Plot per region
-flag_region_plot = false
+flag_region_plot = true
 if flag_region_plot
 for ind_reg = 1:maximum(reg_data[:,2])
    ind_tmp = findall(isequal(ind_reg),reg_data[:,2])
@@ -40,26 +40,26 @@ for ind_reg = 1:maximum(reg_data[:,2])
    tmp_coun_over = [ reg_totale_attualmente_positivi reg_deceduti reg_dimessi_guariti ]
    Data_entries = ["Totale attualmente positivi" "Deceduti" "Dimessi guariti"]
    separation = round(maximum(tmp_coun_over),digits=-( ndigits(maximum(tmp_coun_over))-2 ))/5
-   plot( 1:timesteps,tmp_coun_over, title=reg_denominazione_regione, yticks = (0:separation:maximum(tmp_coun_over)), xticks = (1:3:timesteps, reg_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, show=true)
-   savefig(string(save_figs_folder_reg,reg_denominazione_regione,"_overview.pdf"))
+   plot( 1:timesteps,tmp_coun_over, title=reg_denominazione_regione, yticks = (0:separation:maximum(tmp_coun_over)), xticks = (1:3:timesteps, reg_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+   savefig(string(save_figs_folder_reg,reg_denominazione_regione,"_overview.png"))
 
    tmp_coun_ther = [ reg_ricoverati_con_sintomi reg_terapia_intensiva reg_totale_ospedalizzati reg_isolamento_domiciliare reg_dimessi_guariti reg_deceduti ]
    Data_entries = ["Ricoverati con sintomi" "Terapia intensiva" "Totale ospedalizzati" "Isolamento domiciliare" "Dimessi guariti" "Deceduti" ]
    separation = round(maximum(tmp_coun_ther),digits=-( ndigits(maximum(tmp_coun_ther))-2 ))/5
-   plot( 1:timesteps,tmp_coun_ther, title=reg_denominazione_regione, yticks = (0:separation:maximum(tmp_coun_ther)), xticks = (1:3:timesteps, reg_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, show=true)
-   savefig(string(save_figs_folder_reg,reg_denominazione_regione,"_therapy.pdf"))
+   plot( 1:timesteps,tmp_coun_ther, title=reg_denominazione_regione, yticks = (0:separation:maximum(tmp_coun_ther)), xticks = (1:3:timesteps, reg_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+   savefig(string(save_figs_folder_reg,reg_denominazione_regione,"_therapy.png"))
 
    tmp_coun_rate = reg_nuovi_attualmente_positivi
    Data_entries = "Nuovi attualmente positivi"
    separation = round(maximum(tmp_coun_rate),digits=-( ndigits(maximum(tmp_coun_rate))-2 ))/5
-   plot( 1:timesteps,tmp_coun_rate, title=reg_denominazione_regione, yticks = (0:separation:maximum(tmp_coun_rate)), xticks = (1:3:timesteps, reg_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, show=true)
-   savefig(string(save_figs_folder_reg,reg_denominazione_regione,"_rate_new_infections.pdf"))
+   plot( 1:timesteps,tmp_coun_rate, title=reg_denominazione_regione, yticks = (0:separation:maximum(tmp_coun_rate)), xticks = (1:3:timesteps, reg_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+   savefig(string(save_figs_folder_reg,reg_denominazione_regione,"_rate_new_infections.png"))
 
 end
 end
 
 ### Plot per province
-flag_province_plot = false
+flag_province_plot = true
 if flag_province_plot
 for ind_pro = unique(pro_data[:,4])
 
@@ -88,14 +88,14 @@ for ind_pro = unique(pro_data[:,4])
    # else
    # println(ind_pro)
    if separation > 0
-      plot( 1:timesteps,pro_totale, title=pro_denominazione_provincia, yticks = (0:separation:maximum(pro_totale)), xticks = (1:3:timesteps, pro_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, show=true)
+      plot( 1:timesteps,pro_totale, title=pro_denominazione_provincia, yticks = (0:separation:maximum(pro_totale)), xticks = (1:3:timesteps, pro_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
    else
-      plot( 1:timesteps,pro_totale, title=pro_denominazione_provincia, xticks = (1:3:timesteps, pro_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, show=true)
+      plot( 1:timesteps,pro_totale, title=pro_denominazione_provincia, xticks = (1:3:timesteps, pro_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
    end
    pro_denominazione_regione   = replace(pro_denominazione_regione, " " => "_")
    pro_denominazione_provincia = replace(pro_denominazione_provincia, " " => "_")
 
-   savefig(string(save_figs_folder_pro,pro_denominazione_regione,"_",pro_denominazione_provincia,".pdf"))
+   savefig(string(save_figs_folder_pro,pro_denominazione_regione,"_",pro_denominazione_provincia,".png"))
 
 
 end
@@ -103,7 +103,7 @@ end
 
 
 ## Plot for the whole nation
-flag_nation_plot = false
+flag_nation_plot = true
 if flag_nation_plot
 naz_dates_cal_vec               = naz_data[:,1]
 naz_ricoverati_con_sintomi      = naz_data[:,2]
@@ -121,14 +121,14 @@ tmp_coun_ther = [ naz_ricoverati_con_sintomi naz_terapia_intensiva naz_totale_os
 Data_entries = ["Ricoverati con sintomi" "Terapia intensiva" "Totale ospedalizzati" "Isolamento domiciliare" ]
 separation = round(maximum(tmp_coun_ther),digits=-( ndigits(maximum(tmp_coun_ther))-2 ))/5
 
-plot( 1:timesteps,tmp_coun_ther, title="Italia", yticks = (0:separation:maximum(tmp_coun_ther)), xticks = (1:3:timesteps, naz_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, show=true)
-savefig(string(save_figs_folder,"ita_national_therapy.pdf"))
+plot( 1:timesteps,tmp_coun_ther, title="Italia", yticks = (0:separation:maximum(tmp_coun_ther)), xticks = (1:3:timesteps, naz_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+savefig(string(save_figs_folder,"ita_national_therapy.png"))
 
 tmp_coun_rate = naz_nuovi_attualmente_positivi
 Data_entries = "Nuovi attualmente positivi"
 separation = round(maximum(tmp_coun_rate),digits=-( ndigits(maximum(tmp_coun_rate))-2 ))/5
-plot( 1:timesteps,tmp_coun_rate, title="Italia", yticks = (0:separation:maximum(tmp_coun_rate)), xticks = (1:3:timesteps, naz_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, show=true)
-savefig(string(save_figs_folder,"ita_national_rate_new_infections.pdf"))
+plot( 1:timesteps,tmp_coun_rate, title="Italia", yticks = (0:separation:maximum(tmp_coun_rate)), xticks = (1:3:timesteps, naz_datestrings[1:3:timesteps]), xrotation=60, ylabel="Numero di casi [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+savefig(string(save_figs_folder,"ita_national_rate_new_infections.png"))
 end
 
 
@@ -141,3 +141,5 @@ end
 # pollution
 # world temperature changes
 # reduction in STD
+
+# re compute all plots by % of the population
