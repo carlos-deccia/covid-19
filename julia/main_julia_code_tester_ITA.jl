@@ -143,3 +143,4 @@ end
 # reduction in STD
 
 # re compute all plots by % of the population
+# Get information of population numbers worldwide

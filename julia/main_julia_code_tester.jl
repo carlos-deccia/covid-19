@@ -151,23 +151,69 @@ if plot_timelines
         reco_Country = reco_def[:,2]
         countries_unique = unique([conf_Country; deat_Country; reco_Country])
 
+        # for idx_c=1:length(countries_unique)
+        #     indx_tmp_c = findall(isequal(countries_unique[idx_c]),conf_Country)
+        #     indx_tmp_d = findall(isequal(countries_unique[idx_c]),deat_Country)
+        #     indx_tmp_r = findall(isequal(countries_unique[idx_c]),reco_Country)
+        #
+        #     tmp_conf = sum(Data_matrix_conf[indx_tmp_c,:],dims = 1)
+        #     tmp_deat = sum(Data_matrix_deat[indx_tmp_d,:],dims = 1)
+        #     tmp_reco = sum(Data_matrix_reco[indx_tmp_r,:],dims = 1)
+        #     tmp_coun = [tmp_conf'  tmp_deat' tmp_reco']
+        #
+        #     plot( 1:timesteps,tmp_coun, title=string("Country: ",countries_unique[idx_c]), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+        #     savefig(string(save_figs_folder_coun, join(split(countries_unique[idx_c])),".png"))
+        # end
+
         for idx_c=1:length(countries_unique)
             indx_tmp_c = findall(isequal(countries_unique[idx_c]),conf_Country)
-            indx_tmp_d = findall(isequal(countries_unique[idx_c]),deat_Country)
-            indx_tmp_r = findall(isequal(countries_unique[idx_c]),reco_Country)
+            # indx_tmp_d = findall(isequal(countries_unique[idx_c]),deat_Country)
+            # indx_tmp_r = findall(isequal(countries_unique[idx_c]),reco_Country)
 
             tmp_conf = sum(Data_matrix_conf[indx_tmp_c,:],dims = 1)
-            tmp_deat = sum(Data_matrix_deat[indx_tmp_d,:],dims = 1)
-            tmp_reco = sum(Data_matrix_reco[indx_tmp_r,:],dims = 1)
-            tmp_coun = [tmp_conf'  tmp_deat' tmp_reco']
+            # tmp_deat = sum(Data_matrix_deat[indx_tmp_d,:],dims = 1)
+            # tmp_reco = sum(Data_matrix_reco[indx_tmp_r,:],dims = 1)
+            tmp_coun = [tmp_conf']
+            Data_entries = countries_unique[idx_c]
+            plot!( 1:timesteps,tmp_coun, title=string("Confirmed per country"), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
 
-            plot( 1:timesteps,tmp_coun, title=string("Country: ",countries_unique[idx_c]), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
-            savefig(string(save_figs_folder_coun, join(split(countries_unique[idx_c])),".png"))
         end
+        savefig(string(save_figs_folder, "Confirmed_per_country.png"))
+
+        for idx_c=1:length(countries_unique)
+            # indx_tmp_c = findall(isequal(countries_unique[idx_c]),conf_Country)
+            indx_tmp_d = findall(isequal(countries_unique[idx_c]),deat_Country)
+            # indx_tmp_r = findall(isequal(countries_unique[idx_c]),reco_Country)
+
+            # tmp_conf = sum(Data_matrix_conf[indx_tmp_c,:],dims = 1)
+            tmp_deat = sum(Data_matrix_deat[indx_tmp_d,:],dims = 1)
+            # tmp_reco = sum(Data_matrix_reco[indx_tmp_r,:],dims = 1)
+            tmp_coun = [tmp_deat']
+            Data_entries = countries_unique[idx_c]
+            plot!( 1:timesteps,tmp_coun, title=string("Death per country"), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+
+        end
+        savefig(string(save_figs_folder, "Death_per_country.png"))
+
+        for idx_c=1:length(countries_unique)
+            # indx_tmp_c = findall(isequal(countries_unique[idx_c]),conf_Country)
+            # indx_tmp_d = findall(isequal(countries_unique[idx_c]),deat_Country)
+            indx_tmp_r = findall(isequal(countries_unique[idx_c]),reco_Country)
+
+            # tmp_conf = sum(Data_matrix_conf[indx_tmp_c,:],dims = 1)
+            # tmp_deat = sum(Data_matrix_deat[indx_tmp_d,:],dims = 1)
+            tmp_reco = sum(Data_matrix_reco[indx_tmp_r,:],dims = 1)
+            tmp_coun = [tmp_reco']
+            Data_entries = countries_unique[idx_c]
+            plot!( 1:timesteps,tmp_coun, title=string("Recovered per country"), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+
+        end
+        savefig(string(save_figs_folder, "Recovered_per_country.png"))
+
     end
 
     ### PLOT timeline globaly
-    flag_timeline_glob = true
+    flag_timeline_glob = false
 
     if flag_timeline_glob
         println("plotting... Global")
