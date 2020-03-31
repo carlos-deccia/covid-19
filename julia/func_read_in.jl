@@ -26,12 +26,14 @@ function func_read_in()
     Nr_entries_deat , col_time_deat  = size(myData_deat)
     Nr_entries_reco , col_time_reco  = size(myData_reco)
     # TimeSteps = col_time_conf-4
-    times_steps = [col_time_conf col_time_deat col_time_reco]
-    timesteps = maximum(times_steps)-4
+    timessteps_conf = col_time_conf-4
+    timesteps_deat  = col_time_deat-4
+    timesteps_reco  = col_time_reco-4
 
-    Data_matrix_conf = NaN*ones(Nr_entries_conf,timesteps)
-    Data_matrix_deat = NaN*ones(Nr_entries_deat,timesteps)
-    Data_matrix_reco = NaN*ones(Nr_entries_reco,timesteps)
+
+    Data_matrix_conf = NaN*ones(Nr_entries_conf,timessteps_conf)
+    Data_matrix_deat = NaN*ones(Nr_entries_deat,timesteps_deat)
+    Data_matrix_reco = NaN*ones(Nr_entries_reco,timesteps_reco)
 
     conf_Province_State = myData_conf[!,1]
     conf_Countries 	    = myData_conf[!,2]
@@ -68,12 +70,12 @@ function func_read_in()
     Data_entries = ["Confirmed" "Deaths" "Recovered"]
 
 
-    setup = [Nr_entries_conf Nr_entries_deat Nr_entries_reco]
+    setup = [Nr_entries_conf Nr_entries_deat Nr_entries_reco timessteps_conf timesteps_deat timesteps_reco]
     conf_def   = [conf_Province_State conf_Countries conf_Lat conf_Lon]
     deat_def   = [deat_Province_State deat_Countries deat_Lat deat_Lon]
     reco_def   = [reco_Province_State reco_Countries reco_Lat reco_Lon]
 
 
-    return setup, timesteps, conf_def, deat_def, reco_def, Data_matrix_conf, Data_matrix_deat, Data_matrix_reco, Data_entries
+    return setup, conf_def, deat_def, reco_def, Data_matrix_conf, Data_matrix_deat, Data_matrix_reco, Data_entries
 
 end
