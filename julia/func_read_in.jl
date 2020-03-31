@@ -7,10 +7,10 @@
 function func_read_in()
 
     ###############################################################################
-
+    # SOURCE https://github.com/CSSEGISandData/COVID-19
     ############################### read in data ###############################
-    # save_data_folder = "COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/"
-    save_data_folder = "input/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/"
+
+    save_data_folder = "input/jhu_COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/"
     data_name_conf = string("time_series_covid19_confirmed_global")
     data_name_deat = string("time_series_covid19_deaths_global")
     data_name_reco = string("time_series_covid19_recovered_global")

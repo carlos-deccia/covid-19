@@ -198,35 +198,8 @@ if plot_timelines
 
 end
 
-using Plots
 
-    conf_Country = conf_def[:,2]
-    countries_unique = unique(conf_def[:,2])
 
-    for idx_c = 1:length(countries_unique)
-        if occursin("China",countries_unique[idx_c]) || occursin("Italy",countries_unique[idx_c]) || occursin("Turkey",countries_unique[idx_c]) || occursin("US",countries_unique[idx_c]) || occursin("Uruguay",countries_unique[idx_c])
-            indx_tmp_c = findall(isequal(countries_unique[idx_c]),conf_Country)
-
-            rate_data = zeros(length(datestrings)-7)
-            rate_data_new = zeros(length(datestrings)-8)
-            for i = length(datestrings)-7:-1:8
-                rate_data[i] = sum(Data_matrix_conf[indx_tmp_c,i-7:i])
-            end
-            for ii = 1:length(rate_data)-1
-            rate_data_new[ii] = rate_data[ii+1] - rate_data[ii]
-            end
-
-            total_data = sum(Data_matrix_conf[indx_tmp_c,1:length(datestrings)-8],dims=1)'
-
-            Data_entries = countries_unique[idx_c]
-            plot!(total_data,rate_data_new, xscale = :log10, xlims = (1, 10^6), yscale = :log10, ylims = (1, 10^6), xlabel="Total cases [-]",  ylabel="Rate of cases [per week]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
-        end
-    end
-    savefig(string(save_figs_folder,"global_rate.png"))
-
-# plot(1:length(Data_matrix_conf[idx_cntry,:]),Data_matrix_conf[idx_cntry,:])
-# New confirmed cases(per last week)
-# Total confirmed cases(time @ i)
 
 
 
