@@ -9,13 +9,7 @@ save_figs_folder_prov = string(save_figs_folder,"timeline_by_province_state/")
 save_figs_folder_coun = string(save_figs_folder,"timeline_by_country/")
 
 ### Read in data
-# setup = [Nr_entries_conf col_time_conf; Nr_entries_deat col_time_deat; Nr_entries_reco col_time_reco]
-# conf_def   = [conf_Province_State conf_Countries conf_Lat conf_Lon]
-# deat_def   = [deat_Province_State deat_Countries deat_Lat deat_Lon]
-# reco_def   = [reco_Province_State reco_Countries reco_Lat reco_Lon]
-# Province_State, Countries, Lat, Lon, Data_matrix_conf, Data_matrix_deat, Data_matrix_reco, Data_entries, TimeSteps, Nr_entries = func_read_in()
 setup, timesteps, conf_def, deat_def, reco_def, Data_matrix_conf, Data_matrix_deat, Data_matrix_reco, Data_entries = func_read_in()
-
 println("loading completed")
 
 ### Create date string for plots
@@ -109,40 +103,13 @@ end
 # with circles that increase in size
 #
 ### PLOT TIMELINES
-plot_timelines = true
+plot_timelines = false
 
 if plot_timelines
     using Plots
-    ### Plot timeline by Province
-    #  ...in progress
-    # flag_timeline_prov = true
-    # if flag_timeline_prov
-    #     println("plotting... Province/State")
-    #     conf_Province_State = conf_def[:,1]
-    #     deat_Province_State = deat_def[:,1]
-    #     reco_Province_State = reco_def[:,1]
-    #     conf_Country = conf_def[:,2]
-    #     deat_Country = deat_def[:,2]
-    #     reco_Country = reco_def[:,2]
-    #     provinces_unique = unique([unique(conf_Province_State); unique(deat_Province_State); unique(reco_Province_State)])
-    #
-    #     for idx_p = 2:length(provinces_unique)
-    #         indx_tmp_conf = findall(isequal(provinces_unique[idx_p]),conf_Province_State)
-    #         indx_tmp_deat = findall(isequal(provinces_unique[idx_p]),deat_Province_State)
-    #         indx_tmp_reco = findall(isequal(provinces_unique[idx_p]),reco_Province_State)
-    #
-    #         tmp_prov = [Data_matrix_conf[indx_tmp_conf,:]', Data_matrix_deat[indx_tmp_deat,:]', Data_matrix_reco[indx_tmp_reco,:]']
-    #             # tmp_prov = [Data_matrix_conf[indx_tmp_p,:]' Data_matrix_deat[indx_tmp_p,:]' Data_matrix_reco[indx_tmp_p,:]']
-    #
-    #             plot( 1:timesteps,tmp_prov, title=string("Country: ",Countries[indx_tmp_p][1],", Province/State: ",Province_State[indx_tmp_p][1]),  xlabel = "Days", xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number [-]", labels=Data_entries, legend=:topleft, show=true)
-    #             country_idx = string( Countries[indx_tmp_p][1],"_", join(split(Province_State[indx_tmp_p][1])) )
-    #             savefig(string(save_figs_folder_prov,country_idx,".pdf"))
-    #     end
-    # end
-
 
     ### Plot timeline by country
-    flag_timeline_coun = true
+    flag_timeline_coun = false
 
     if flag_timeline_coun
         println("plotting... Countries")
@@ -151,19 +118,19 @@ if plot_timelines
         reco_Country = reco_def[:,2]
         countries_unique = unique([conf_Country; deat_Country; reco_Country])
 
-        # for idx_c=1:length(countries_unique)
-        #     indx_tmp_c = findall(isequal(countries_unique[idx_c]),conf_Country)
-        #     indx_tmp_d = findall(isequal(countries_unique[idx_c]),deat_Country)
-        #     indx_tmp_r = findall(isequal(countries_unique[idx_c]),reco_Country)
-        #
-        #     tmp_conf = sum(Data_matrix_conf[indx_tmp_c,:],dims = 1)
-        #     tmp_deat = sum(Data_matrix_deat[indx_tmp_d,:],dims = 1)
-        #     tmp_reco = sum(Data_matrix_reco[indx_tmp_r,:],dims = 1)
-        #     tmp_coun = [tmp_conf'  tmp_deat' tmp_reco']
-        #
-        #     plot( 1:timesteps,tmp_coun, title=string("Country: ",countries_unique[idx_c]), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
-        #     savefig(string(save_figs_folder_coun, join(split(countries_unique[idx_c])),".png"))
-        # end
+        for idx_c=1:length(countries_unique)
+            indx_tmp_c = findall(isequal(countries_unique[idx_c]),conf_Country)
+            indx_tmp_d = findall(isequal(countries_unique[idx_c]),deat_Country)
+            indx_tmp_r = findall(isequal(countries_unique[idx_c]),reco_Country)
+
+            tmp_conf = sum(Data_matrix_conf[indx_tmp_c,:],dims = 1)
+            tmp_deat = sum(Data_matrix_deat[indx_tmp_d,:],dims = 1)
+            tmp_reco = sum(Data_matrix_reco[indx_tmp_r,:],dims = 1)
+            tmp_coun = [tmp_conf'  tmp_deat' tmp_reco']
+
+            plot( 1:timesteps,tmp_coun, title=string("Country: ",countries_unique[idx_c]), xticks = (1:3:timesteps, datestrings[1:3:timesteps]), xrotation=60, ylabel="Number of cases [-]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+            savefig(string(save_figs_folder_coun, join(split(countries_unique[idx_c])),".png"))
+        end
 
         for idx_c=1:length(countries_unique)
             indx_tmp_c = findall(isequal(countries_unique[idx_c]),conf_Country)
@@ -230,6 +197,41 @@ if plot_timelines
     end
 
 end
+
+using Plots
+
+    conf_Country = conf_def[:,2]
+    countries_unique = unique(conf_def[:,2])
+
+    for idx_c = 1:length(countries_unique)
+        if occursin("China",countries_unique[idx_c]) || occursin("Italy",countries_unique[idx_c]) || occursin("Turkey",countries_unique[idx_c]) || occursin("US",countries_unique[idx_c]) || occursin("Uruguay",countries_unique[idx_c])
+            indx_tmp_c = findall(isequal(countries_unique[idx_c]),conf_Country)
+
+            rate_data = zeros(length(datestrings)-7)
+            rate_data_new = zeros(length(datestrings)-8)
+            for i = length(datestrings)-7:-1:8
+                rate_data[i] = sum(Data_matrix_conf[indx_tmp_c,i-7:i])
+            end
+            for ii = 1:length(rate_data)-1
+            rate_data_new[ii] = rate_data[ii+1] - rate_data[ii]
+            end
+
+            total_data = sum(Data_matrix_conf[indx_tmp_c,1:length(datestrings)-8],dims=1)'
+
+            Data_entries = countries_unique[idx_c]
+            plot!(total_data,rate_data_new, xscale = :log10, xlims = (1, 10^6), yscale = :log10, ylims = (1, 10^6), xlabel="Total cases [-]",  ylabel="Rate of cases [per week]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+        end
+    end
+    savefig(string(save_figs_folder,"global_rate.png"))
+
+# plot(1:length(Data_matrix_conf[idx_cntry,:]),Data_matrix_conf[idx_cntry,:])
+# New confirmed cases(per last week)
+# Total confirmed cases(time @ i)
+
+
+
+
+
 
 println("done")
 
