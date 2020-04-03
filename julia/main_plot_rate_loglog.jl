@@ -78,7 +78,7 @@ conf_Country_unique = unique(conf_def[:,2])
 # end
 
 ##
-global_rate_CITUU_7days = true
+global_rate_CITUU_7days = false
 if global_rate_CITUU_7days
 delay_days = 7
 for idx_c = 1:length(conf_Country_unique)
@@ -101,13 +101,13 @@ for idx_c = 1:length(conf_Country_unique)
         end
 
         Data_entries = conf_Country_unique[idx_c]
-        plot!(total_data[2:end],rate_data_new, xscale = :log10, xlims = (1, 10^6), yscale = :log10, ylims = (1, 10^6), xlabel="Total cases [-]",  ylabel="Rate of cases [per 3 days]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+        plot!(total_data[2:end],rate_data_new, xscale = :log10, xlims = (1, 10^6), yscale = :log10, ylims = (1, 10^6), xlabel="Total cases [-]",  ylabel="Rate of cases [per $delay_days days]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
     end
 end
 savefig(string(save_figs_folder,"global_rate_CISTUU_$delay_days","days.png"))
 end
 
-global_rate_CITUU_3days = false
+global_rate_CITUU_3days = true
 if global_rate_CITUU_3days
 delay_days = 3
 for idx_c = 1:length(conf_Country_unique)
@@ -130,8 +130,11 @@ for idx_c = 1:length(conf_Country_unique)
         end
 
         Data_entries = conf_Country_unique[idx_c]
-        plot!(total_data[2:end],rate_data_new, xscale = :log10, xlims = (1, 10^6), yscale = :log10, ylims = (1, 10^6), xlabel="Total cases [-]",  ylabel="Rate of cases [per 3 days]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
+        plot!(total_data[2:end],rate_data_new, xscale = :log10, xlims = (1, 10^6), yscale = :log10, ylims = (1, 10^6), xlabel="Total cases [-]",  ylabel="Rate of cases [per $delay_days days]", labels=Data_entries, legend=:topleft, dpi=300, show=true)
     end
 end
 savefig(string(save_figs_folder,"global_rate_CISTUU_$delay_days","days.png"))
 end
+
+USE DEATH RATE - wHATS the difference?
+create simple stupid html js website that takes the julia data
