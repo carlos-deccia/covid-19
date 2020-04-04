@@ -1,4 +1,5 @@
 # main_julia_code_tester.jl
+# https://github.com/CSSEGISandData/COVID-19
 push!(LOAD_PATH, "/Users/carlosdeccia/Google Drive/_COVID/covid-19/julia")
 
 using CodeDepositCorona
@@ -82,7 +83,7 @@ global_rate_CITUU_7days = false
 if global_rate_CITUU_7days
 delay_days = 7
 for idx_c = 1:length(conf_Country_unique)
-    if occursin("China",conf_Country_unique[idx_c]) || occursin("Italy",conf_Country_unique[idx_c]) || occursin("Spain",conf_Country_unique[idx_c]) || occursin("Korea, South",conf_Country_unique[idx_c]) || occursin("Turkey",conf_Country_unique[idx_c]) || occursin("Uruguay",conf_Country_unique[idx_c]) || occursin("US",conf_Country_unique[idx_c])
+    if occursin("China",conf_Country_unique[idx_c]) || occursin("Italy",conf_Country_unique[idx_c]) || occursin("France",conf_Country_unique[idx_c]) || occursin("Spain",conf_Country_unique[idx_c]) || occursin("Korea, South",conf_Country_unique[idx_c]) || occursin("Turkey",conf_Country_unique[idx_c]) || occursin("Uruguay",conf_Country_unique[idx_c]) || occursin("US",conf_Country_unique[idx_c])
 
         indx_tmp_c = findall(isequal(conf_Country_unique[idx_c]),conf_Country)
 
@@ -111,7 +112,7 @@ global_rate_CITUU_3days = true
 if global_rate_CITUU_3days
 delay_days = 3
 for idx_c = 1:length(conf_Country_unique)
-    if occursin("China",conf_Country_unique[idx_c]) || occursin("Italy",conf_Country_unique[idx_c]) || occursin("Spain",conf_Country_unique[idx_c]) || occursin("Korea, South",conf_Country_unique[idx_c]) || occursin("Turkey",conf_Country_unique[idx_c]) || occursin("Uruguay",conf_Country_unique[idx_c]) || occursin("US",conf_Country_unique[idx_c])
+    if occursin("China",conf_Country_unique[idx_c]) || occursin("Italy",conf_Country_unique[idx_c]) || occursin("France",conf_Country_unique[idx_c]) || occursin("Spain",conf_Country_unique[idx_c]) || occursin("Korea, South",conf_Country_unique[idx_c]) || occursin("Turkey",conf_Country_unique[idx_c]) || occursin("Uruguay",conf_Country_unique[idx_c]) || occursin("US",conf_Country_unique[idx_c])
 
         indx_tmp_c = findall(isequal(conf_Country_unique[idx_c]),conf_Country)
 
@@ -136,5 +137,5 @@ end
 savefig(string(save_figs_folder,"global_rate_CISTUU_$delay_days","days.png"))
 end
 
-USE DEATH RATE - wHATS the difference?
-create simple stupid html js website that takes the julia data
+# USE DEATH RATE - wHATS the difference?
+# create simple stupid html js website that takes the julia data
