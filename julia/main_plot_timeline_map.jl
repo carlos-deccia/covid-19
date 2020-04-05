@@ -9,10 +9,11 @@ save_figs_folder_prov = string(save_figs_folder,"timeline_by_province_state/")
 save_figs_folder_coun = string(save_figs_folder,"timeline_by_country/")
 
 ### Read in data
-setup, timesteps, conf_def, deat_def, reco_def, Data_matrix_conf, Data_matrix_deat, Data_matrix_reco, Data_entries = func_read_in()
+setup, conf_def, deat_def, reco_def, Data_matrix_conf, Data_matrix_deat, Data_matrix_reco, Data_entries = func_read_in()
 println("loading completed")
 
 ### Create date string for plots
+
 calendar_date_start = Dates.DateTime(2020, 1, 22, 0, 0, 0)
 julian_date_start = Dates.datetime2julian.(calendar_date_start)
 calendar_date_end = Dates.julian2datetime(julian_date_start+timesteps-1) # to compensate for the first 5 columns
@@ -103,13 +104,13 @@ end
 # with circles that increase in size
 #
 ### PLOT TIMELINES
-plot_timelines = false
+plot_timelines = true
 
 if plot_timelines
     using Plots
 
     ### Plot timeline by country
-    flag_timeline_coun = false
+    flag_timeline_coun = true
 
     if flag_timeline_coun
         println("plotting... Countries")
